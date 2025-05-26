@@ -9,12 +9,13 @@ export type DrizzleDatabase<
   TSchema extends Record<string, unknown> = Record<string, never>,
 > = BaseSQLiteDatabase<"async", any, TSchema>;
 
+type DrizzleOptions = {
+  schema?: Record<string, unknown>;
+}
+
 export function drizzle<
   TSchema extends Record<string, unknown> = Record<string, never>,
->(db: Database): DrizzleDatabase<TSchema> {
-  // TODO: Support schema
-  const schema = undefined;
-
+>(db: Database, { schema }: DrizzleOptions): DrizzleDatabase<TSchema> {
   const dialect = new SQLiteAsyncDialect();
 
   const session = new DB0Session(db, dialect, schema);
